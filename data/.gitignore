@@ -1,2 +1,4 @@
 /transports
 /cleaned.csv
+/clustered.csv
+/clusterer.pkl

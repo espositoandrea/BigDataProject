@@ -2,7 +2,18 @@ stages:
   cleaning:
     cmd: sh cleaning.sh data/transports/* >data/cleaned.csv
     deps:
-    - cleaning.sh
-    - data/transports
+      - cleaning.sh
+      - data/transports
     outs:
-    - data/cleaned.csv
+      - data/cleaned.csv
+  clustering:
+    cmd: python clustering.py -m data/clusterer.pkl data/cleaned.csv >data/clustered.csv
+    deps:
+      - clustering.py
+      - data/cleaned.csv
+    outs:
+      - data/clustered.csv
+      - data/clusterer.pkl
+    params:
+      - seed
+      - clustering.k
