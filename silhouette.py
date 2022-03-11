@@ -97,7 +97,8 @@ def test_with_k_clusters(df: pd.DataFrame, k: int, seed: int = 42, outfolder: st
 
     directory = Path(outfolder)
     directory.mkdir(parents=True, exist_ok=True)
-    plt.savefig(directory / f"{k}-clusters.pdf")
+    plt.savefig(directory / f"{k:02d}-clusters.pdf")
+    plt.clf()
     return k, silhouette_avg
 
 
