@@ -22,15 +22,17 @@ def train_model(datasets: List[str], k: int, seed: int = 42, outfile: str = None
         logging.info("Loading existing model")
         with open(outfile, "rb") as f:
             clusterer = pickle.load(f)
-        labels = clusterer.predict(df[["Latitude", "Longitude"]])
+        labels = clusterer.predict(df[["Longitude", "Latitude"]])
     else:
         logging.info("Training new model")
         clusterer = KMeans(n_clusters=k, random_state=seed)
-        labels = clusterer.fit_predict(df[["Latitude", "Longitude"]])
+        labels = clusterer.fit_predict(df[["Longitude", "Latitude"]])
         if outfile:
             with open(outfile, "wb") as f:
                 pickle.dump(clusterer, f)
+    centroids = clusterer.cluster_centers_
     df["Cluster"] = labels
+    df[["Cluster Longitude", "Cluster Latitude"]] = centroids[labels]
     return df
 
 
