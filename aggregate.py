@@ -40,7 +40,7 @@ def encode_dataset(df: pd.DataFrame):
     df2 = df2.join(pd.get_dummies(df2["HeadwayService"], prefix="HeadwayService", sparse=True))
     df2["DestinationAimedArrivalTime"] = df2["DestinationAimedArrivalTime"].map(lambda x: x.tz_localize(None))
     df2["OriginAimedDepartureTime"] = df2["OriginAimedDepartureTime"].map(lambda x: x.tz_localize(None))
-    return df2
+    return df2.sort_values('dateTime')
 
 
 def get_vectorial_aggregations(columns: List[str]) -> Dict[str, str]:
@@ -71,17 +71,17 @@ def main():
     indexer = df["dateTime"].sort_values().diff().fillna(pd.Timedelta(seconds=0)).cumsum()
     grouper = indexer.map(lambda x: x.floor('5T').total_seconds() / 60).astype('int').rename("TimeWindowID")
     df["dateTimeGroup"] = df["dateTime"].map(lambda x: x.floor(freq='5T'))
-    # TODO: Remove this debug print
-    print(df[["dateTimeGroup", "OriginAimedDepartureTime", "DestinationAimedArrivalTime"]], file=sys.stderr)
 
-    # TODO: Check if we need to invert AimedXTime and dateTimeGroup ("aimed - window" or "window - aimed"?)
-    def get_diff(x: pd.Series) -> pd.Series:
-        return (x - df["dateTimeGroup"]).dt.total_seconds().astype('int')
+    def to_seconds(x: pd.Series) -> pd.Series:
+        return (x - pd.Timestamp(0)).dt.total_seconds().astype('int')
 
-    df["OriginAimedDepartureTime"] = get_diff(df["OriginAimedDepartureTime"])
-    df["DestinationAimedArrivalTime"] = get_diff(df["DestinationAimedArrivalTime"])
-    # TODO: Remove this debug print
-    print(df[["dateTimeGroup", "OriginAimedDepartureTime", "DestinationAimedArrivalTime"]], file=sys.stderr)
+    df["OriginAimedDepartureTime"] = to_seconds(df["OriginAimedDepartureTime"])
+    df["DestinationAimedArrivalTime"] = to_seconds(df["DestinationAimedArrivalTime"])
+
+    converted_times = pd.concat(
+        group[["OriginAimedDepartureTime", "DestinationAimedArrivalTime"]].diff().fillna(0) for _, group in
+        df.groupby(grouper))
+    df[["OriginAimedDepartureTime", "DestinationAimedArrivalTime"]] = converted_times
 
     grp = df.groupby([grouper, 'Cluster'])
     agg = grp.aggregate({
