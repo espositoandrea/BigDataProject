@@ -68,6 +68,8 @@ def main():
 
     df = encode_dataset(df)
 
+    df["dateTimeDiff"] = df["dateTime"].diff().fillna(pd.Timedelta(seconds=0)).dt.total_seconds().astype('int')
+
     indexer = df["dateTime"].sort_values().diff().fillna(pd.Timedelta(seconds=0)).cumsum()
     grouper = indexer.map(lambda x: x.floor('5T').total_seconds() / 60).astype('int').rename("TimeWindowID")
     df["dateTimeGroup"] = df["dateTime"].map(lambda x: x.floor(freq='5T'))
@@ -88,6 +90,7 @@ def main():
         'Cluster Latitude': 'min',
         'Cluster Longitude': 'min',
         'dateTimeGroup': 'min',
+        'dateTimeDiff': 'mean',
         'Delay': 'mean',
         'Percentage': 'mean',
         'InPanic': 'sum',
