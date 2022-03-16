@@ -32,7 +32,7 @@ def train_model(datasets: List[str], k: int, seed: int = 42, outfile: str = None
                 pickle.dump(clusterer, f)
     centroids = clusterer.cluster_centers_
     df["Cluster"] = labels
-    df[["Cluster Longitude", "Cluster Latitude"]] = centroids[labels]
+    df[["ClusterLongitude", "ClusterLatitude"]] = centroids[labels]
     return df
 
 

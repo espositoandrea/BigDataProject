@@ -87,8 +87,8 @@ def main():
 
     grp = df.groupby([grouper, 'Cluster'])
     agg = grp.aggregate({
-        'Cluster Latitude': 'min',
-        'Cluster Longitude': 'min',
+        'ClusterLatitude': 'min',
+        'ClusterLongitude': 'min',
         'dateTimeGroup': 'min',
         'dateTimeDiff': 'mean',
         'Delay': 'mean',
