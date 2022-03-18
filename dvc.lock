@@ -51,3 +51,17 @@ stages:
     - path: data/aggregates.csv
       md5: baecfc0330a17e9873f41bcb127f7890
       size: 440273104
+  time-windows:
+    cmd: python time-windows.py data/aggregates.csv -o data/windows
+    deps:
+    - path: data/aggregates.csv
+      md5: baecfc0330a17e9873f41bcb127f7890
+      size: 440273104
+    - path: time-windows.py
+      md5: 70282ae959145b57eada03d39f955e57
+      size: 1007
+    outs:
+    - path: data/windows
+      md5: 487fa4ffac1b98ba3791ed0366e1d991.dir
+      size: 467782493
+      nfiles: 169
