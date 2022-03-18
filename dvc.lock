@@ -65,3 +65,22 @@ stages:
       md5: 487fa4ffac1b98ba3791ed0366e1d991.dir
       size: 467782493
       nfiles: 169
+  create-train-test:
+    cmd: python create-train-test.py data/windows data/train-test
+    deps:
+    - path: create-train-test.py
+      md5: 681b1308a1620c8bd20427eb6b951b35
+      size: 3948
+    - path: data/windows
+      md5: 487fa4ffac1b98ba3791ed0366e1d991.dir
+      size: 467782493
+      nfiles: 169
+    params:
+      params.yaml:
+        create-train-test.perturbed-fraction: 0.1
+        seed: 42
+    outs:
+    - path: data/train-test
+      md5: 222088a4b317f6d51610e2a2cd39a327.dir
+      size: 37754196814
+      nfiles: 840
