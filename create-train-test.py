@@ -34,7 +34,7 @@ def setup_args() -> argparse.Namespace:
     return parser.parse_args()
 
 
-SAFE_COLS = {"ClusterLatitude", "ClusterLongitude", "dateTimeGroup"}
+SAFE_COLS = {"ClusterLatitude", "ClusterLongitude", "dateTimeGroup", "TimeWindowID", "Cluster"}
 Edit = namedtuple("Edit", ["row", "column", "old_value", "new_value"])
 
 
