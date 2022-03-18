@@ -38,3 +38,16 @@ stages:
     - path: data/clusterer.pkl
       md5: adcca6dc07bb836aa0d56d55fbc6ab67
       size: 501874
+  aggregate:
+    cmd: python aggregate.py data/clustered.csv >data/aggregates.csv
+    deps:
+    - path: aggregate.py
+      md5: 0cd989947a5526177474751e1abc999d
+      size: 4565
+    - path: data/clustered.csv
+      md5: 870c6793983243ac9496371b3c2c5eec
+      size: 36820601
+    outs:
+    - path: data/aggregates.csv
+      md5: baecfc0330a17e9873f41bcb127f7890
+      size: 440273104
