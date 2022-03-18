@@ -10,7 +10,31 @@ stages:
       md5: 077f74552eca7c022f474924d26c56f7.dir
       size: 280350103
       nfiles: 1012
+    params:
+      params.yaml:
+        clustering.k: 100
+        seed: 42
     outs:
     - path: data/cleaned.csv
       md5: c6a47508029621ae8be8853f4f7bd57c
       size: 31507827
+  clustering:
+    cmd: python clustering.py -m data/clusterer.pkl data/cleaned.csv >data/clustered.csv
+    deps:
+    - path: clustering.py
+      md5: 97358248286b7a85b032ada4dd259f25
+      size: 2236
+    - path: data/cleaned.csv
+      md5: c6a47508029621ae8be8853f4f7bd57c
+      size: 31507827
+    params:
+      params.yaml:
+        clustering.k: 100
+        seed: 42
+    outs:
+    - path: data/clustered.csv
+      md5: 870c6793983243ac9496371b3c2c5eec
+      size: 36820601
+    - path: data/clusterer.pkl
+      md5: adcca6dc07bb836aa0d56d55fbc6ab67
+      size: 501874
