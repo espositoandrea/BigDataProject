@@ -1,3 +1,5 @@
 seed: 42
 clustering:
   k: 100
+create-train-test:
+  perturbed-fraction: 0.1

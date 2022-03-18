@@ -24,3 +24,20 @@ stages:
     - data/clustered.csv
     outs:
     - data/aggregates.csv
+  time-windows:
+    cmd: python time-windows.py data/aggregates.csv -o data/windows
+    deps:
+    - data/aggregates.csv
+    - time-windows.py
+    outs:
+    - data/windows
+  create-train-test:
+    cmd: python create-train-test.py data/windows data/train-test
+    deps:
+    - create-train-test.py
+    - data/windows
+    outs:
+    - data/train-test
+    params:
+    - seed
+    - create-train-test.perturbed-fraction
