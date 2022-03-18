@@ -1,0 +1,16 @@
+schema: '2.0'
+stages:
+  cleaning:
+    cmd: sh cleaning.sh data/transports/* >data/cleaned.csv
+    deps:
+    - path: cleaning.sh
+      md5: b2c4d990ec4b7b3bb93408b2b6473d04
+      size: 358
+    - path: data/transports
+      md5: 077f74552eca7c022f474924d26c56f7.dir
+      size: 280350103
+      nfiles: 1012
+    outs:
+    - path: data/cleaned.csv
+      md5: c6a47508029621ae8be8853f4f7bd57c
+      size: 31507827

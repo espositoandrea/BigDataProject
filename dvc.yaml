@@ -1,0 +1,8 @@
+stages:
+  cleaning:
+    cmd: sh cleaning.sh data/transports/* >data/cleaned.csv
+    deps:
+    - cleaning.sh
+    - data/transports
+    outs:
+    - data/cleaned.csv
