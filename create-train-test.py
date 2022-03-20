@@ -58,6 +58,8 @@ def perturb(split: Path, fraction: float = 0.1, seed: int = 42) -> List[Edit]:
             data[col] = randfunc(min_max.loc['min', col], min_max.loc['max', col])
             history.append(Edit(row=i, column=col, old_value=old, new_value=data[col]))
         perturbed_data.loc[i] = data
+    df["perturbed"] = False
+    df.loc[perturbed_data.index, "perturbed"] = True
     df.update(perturbed_data)
     df.to_csv(split / 'test.csv', index=False)
     return list(filter(lambda x: x.old_value != x.new_value, history))
