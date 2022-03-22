@@ -41,3 +41,12 @@ stages:
     params:
     - seed
     - create-train-test.perturbed-fraction
+  resizing:
+    cmd: python3 resize-train-test.py data/train-test data/resized-train-test
+    deps:
+    - data/train-test
+    - resize-train-test.py
+    outs:
+    - data/resized-train-test
+    params:
+    - resize.to-drop

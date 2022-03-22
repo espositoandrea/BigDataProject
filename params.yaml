@@ -3,3 +3,7 @@ clustering:
   k: 100
 create-train-test:
   perturbed-fraction: 0.1
+resize:
+  to-drop:
+    - monitoredCall/StopPointName
+    - monitoredCall/StopPointRef

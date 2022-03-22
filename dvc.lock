@@ -84,3 +84,23 @@ stages:
       md5: d5c947fcd68d06a7ffa1165fb2ae8e0d.dir
       size: 37754705919
       nfiles: 840
+  resizing:
+    cmd: python3 resize-train-test.py data/train-test data/resized-train-test
+    deps:
+    - path: data/train-test
+      md5: d5c947fcd68d06a7ffa1165fb2ae8e0d.dir
+      size: 37754705919
+      nfiles: 840
+    - path: resize-train-test.py
+      md5: 2f70724c241949d5f26f7f77c4ee7839
+      size: 1906
+    params:
+      params.yaml:
+        resize.to-drop:
+        - monitoredCall/StopPointName
+        - monitoredCall/StopPointRef
+    outs:
+    - path: data/resized-train-test
+      md5: 0c0fe9a5df2067f16392bb627e456da9.dir
+      size: 7081513576
+      nfiles: 504
