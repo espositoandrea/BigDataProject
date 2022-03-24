@@ -104,3 +104,25 @@ stages:
       md5: 0c0fe9a5df2067f16392bb627e456da9.dir
       size: 7081513576
       nfiles: 504
+  create-train-test-v2:
+    cmd: python create-train-test-v2.py data/windows data/train-test-v2
+    deps:
+    - path: create-train-test-v2.py
+      md5: 262e06343beb45209313ecdef5c8794f
+      size: 4894
+    - path: data/windows
+      md5: 487fa4ffac1b98ba3791ed0366e1d991.dir
+      size: 467782493
+      nfiles: 169
+    params:
+      params.yaml:
+        create-train-test.perturbed-fraction: 0.1
+        resize.to-drop:
+        - monitoredCall/StopPointName
+        - monitoredCall/StopPointRef
+        seed: 42
+    outs:
+    - path: data/train-test-v2
+      md5: 08d93d47e255cfa9d9afcb33b82143aa.dir
+      size: 6940494993
+      nfiles: 540

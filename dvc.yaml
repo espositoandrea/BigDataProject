@@ -50,3 +50,14 @@ stages:
     - data/resized-train-test
     params:
     - resize.to-drop
+  create-train-test-v2:
+    cmd: python create-train-test-v2.py data/windows data/train-test-v2
+    deps:
+    - create-train-test-v2.py
+    - data/windows
+    outs:
+    - data/train-test-v2
+    params:
+    - seed
+    - create-train-test.perturbed-fraction
+    - resize.to-drop
